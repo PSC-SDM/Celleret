@@ -38,6 +38,7 @@ El propósito principal es **mantener una visión clara del stock** y **no dejar
    * Campos:
 
      * Nombre del vino
+     * Cantidad de botellas
      * Bodega / Productor
      * Denominación de origen
      * Tipo (tinto, blanco, rosado, espumoso, generoso…)
@@ -49,7 +50,8 @@ El propósito principal es **mantener una visión clara del stock** y **no dejar
 3. **Visualización del stock**
 
    * Lista con filtros (tipo, año, estado de consumo).
-   * Indicador visual (verde = óptimo, amarillo = pronto, rojo = pasado).
+   * Indicador visual por estilo de vino .
+   * Indicador visual por fecha optima de consumo(óptimo, pronto, tarde).
    * Buscador rápido por nombre.
 4. **Dashboard resumen**
 
@@ -79,19 +81,17 @@ El propósito principal es **mantener una visión clara del stock** y **no dejar
 
 * **Framework:** React + Vite
 * **UI:** TailwindCSS + shadcn/ui
-* **Estado global:** Zustand o React Query (según enfoque de datos)
+* **Estado global:** Zustand
 * **Routing:** React Router
-* **Autenticación:** Firebase Auth o Supabase Auth
-* **Deploy:** Vercel / Netlify
+* **Autenticación:** Custom con Backend OAuth
+* **Deploy:** Vercel / VPS
 
 ### Backend
 
 * **Opción ligera (recomendada para MVP):**
-
   * Firebase Firestore o Supabase (BaaS)
   * Permite gestionar usuarios y datos sin mantener un servidor.
 * **Opción autogestionada (si se prefiere Node):**
-
   * Node.js + Express
   * Base de datos: PostgreSQL o MongoDB Atlas
   * ORM: Prisma (en caso de SQL)
@@ -100,7 +100,7 @@ El propósito principal es **mantener una visión clara del stock** y **no dejar
 
 * Hosting estático (Vercel / Netlify / Render).
 * Autenticación y base de datos gestionadas.
-* Opcional: almacenamiento de imágenes en Firebase Storage o Cloudinary.
+* Opcional: almacenamiento de imágenes en Firebase Storage o Cloudinary. NO MVP
 
 ---
 
