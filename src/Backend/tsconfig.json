@@ -1,0 +1,51 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": [
+            "ES2022"
+        ],
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "rootDir": "./",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": ".",
+        "paths": {
+            "@domain/*": [
+                "../Domain/*"
+            ],
+            "@backend/*": [
+                "./*"
+            ]
+        }
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.test.ts",
+        "__tests__"
+    ],
+    "references": [
+        {
+            "path": "../Domain"
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "react",
+        "react-hooks",
+        "react-refresh"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": 2022,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "react/react-in-jsx-scope": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react-refresh/only-export-components": "warn",
+        "no-console": "warn"
+    },
+    "env": {
+        "browser": true,
+        "es2022": true
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}

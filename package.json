@@ -1,0 +1,45 @@
+{
+    "name": "celleret",
+    "version": "0.1.0",
+    "description": "Webapp de gestión de bodegas domésticas",
+    "private": true,
+    "scripts": {
+        "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+        "dev:backend": "cd src/Backend && npm run dev",
+        "dev:frontend": "cd src/Frontend && npm run dev",
+        "build": "npm run build:domain && npm run build:backend && npm run build:frontend",
+        "build:domain": "cd src/Domain && npm run build",
+        "build:backend": "cd src/Backend && npm run build",
+        "build:frontend": "cd src/Frontend && npm run build",
+        "test": "npm run test:domain && npm run test:backend && npm run test:frontend",
+        "test:domain": "cd src/Domain && npm run test",
+        "test:backend": "cd src/Backend && npm run test",
+        "test:frontend": "cd src/Frontend && npm run test",
+        "lint": "npm run lint:domain && npm run lint:backend && npm run lint:frontend",
+        "lint:domain": "cd src/Domain && npm run lint",
+        "lint:backend": "cd src/Backend && npm run lint",
+        "lint:frontend": "cd src/Frontend && npm run lint",
+        "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+        "setup": "npm install && npm run install:all",
+        "install:all": "cd src/Domain && npm install && cd ../Backend && npm install && cd ../Frontend && npm install"
+    },
+    "devDependencies": {
+        "@types/node": "^20.9.0",
+        "@typescript-eslint/eslint-plugin": "^6.11.0",
+        "@typescript-eslint/parser": "^6.11.0",
+        "concurrently": "^8.2.2",
+        "eslint": "^8.53.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-import": "^2.29.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "prettier": "^3.1.0",
+        "typescript": "^5.2.2"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
+    },
+    "author": "Equipo Celleret",
+    "license": "MIT"
+}
