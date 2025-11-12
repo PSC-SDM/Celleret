@@ -62,29 +62,31 @@ class WineFactory {
 
 ```
 src/
-├── domain/                 # Capa de Dominio (Core)
+├── Domain/                 # Capa de Dominio (Core)
 │   ├── entities/          # Entidades del negocio
 │   ├── value-objects/     # Value Objects
 │   ├── repositories/      # Puertos (interfaces)
 │   ├── services/          # Servicios de dominio
 │   └── exceptions/        # Excepciones de dominio
 │
-├── application/            # Capa de Aplicación
-│   ├── use-cases/         # Casos de uso
-│   ├── dto/               # Data Transfer Objects
-│   ├── http/              # Cliente HTTP (Supabase, APIs)
-│   └── ports/             # Puertos de entrada/salida
-│
-├── presentation/           # Capa de Presentación
-│   ├── components/        # Componentes React
-│   ├── pages/             # Páginas
-│   ├── hooks/             # Custom hooks
-│   └── view-models/       # View Models
-│
-├── infrastructure/         # Capa de Infraestructura (Adaptadores)
-    ├── repositories/      # Implementaciones de repositorios
-    ├── persistence/       # Configuración de BD
-    └── external/          # Servicios externos
+├── FrontEnd - Web
+│   ├── presentation/           # Capa de Presentación
+│   │   ├── components/        # Componentes React
+│   │   ├── pages/             # Páginas
+│   │   ├── hooks/             # Custom hooks
+│   │   ├── routes/            # Routes, http
+│   │   └── view-models/       # View Models
+├── Backend
+│   ├── application/            # Capa de Aplicación
+│   │   ├── use-cases/         # Casos de uso
+│   │   ├── dto/               # Data Transfer Objects
+│   │   ├── routes/            # Routes, Cliente HTTP (APIs)
+│   │   └── ports/             # Puertos de entrada/salida
+│   │
+│   └── infrastructure/         # Capa de Infraestructura (Adaptadores)
+│       ├── repositories/      # Implementaciones de repositorios
+│       ├── persistence/       # Configuración de BD
+│       └── external/          # Servicios externos
 ```
 
 ### Flujo de Dependencias
@@ -103,24 +105,54 @@ Presentation → Application → Domain
 
 ### ¿Cómo aplicar DDD en este proyecto?
 
-Domain-Driven Design (DDD) es una filosofía de diseño que busca que la lógica de negocio esté en el centro de la aplicación, modelando el dominio de forma fiel y expresiva. En este proyecto, la aplicación de DDD debe guiarse por los siguientes principios y ubicaciones:
+Domain-Driven Design (DDD) es una filosofía de diseño que busca que la lógica de negocio esté en el centro de la aplicación, modelando el dominio de forma fiel y expresiva. En este proyecto, la aplicación de DDD se implementa con un **dominio compartido** entre frontend y backend, siguiendo estos principios:
 
-- **Entidades y Value Objects:** Toda la lógica de negocio y validaciones que definen el comportamiento y las reglas del dominio deben implementarse en la carpeta `src/domain/`. Aquí se definen las entidades principales, sus atributos, métodos y value objects asociados. No incluyas lógica de infraestructura ni detalles de frameworks en esta capa.
+#### **Dominio Compartido (`src/Domain/`)**
+El dominio es **único y compartido** entre todas las capas de la aplicación, ubicado al mismo nivel jerárquico que Frontend y Backend:
 
-- **Repositorios (Puertos):** Las interfaces que definen cómo acceder a los datos (por ejemplo, guardar, buscar, eliminar entidades) deben estar en `src/domain/repositories/`. Estas interfaces no dependen de ninguna tecnología concreta.
+- **Entidades y Value Objects:** Toda la lógica de negocio y validaciones que definen el comportamiento y las reglas del dominio se implementan en `src/Domain/entities/` y `src/Domain/value-objects/`. Aquí se definen las entidades principales, sus atributos, métodos y value objects asociados. **No incluyas lógica de infraestructura ni detalles de frameworks en esta capa.**
 
-- **Casos de Uso (Application Layer):** La orquestación de la lógica de negocio (por ejemplo, crear, modificar, consultar entidades) debe implementarse en la carpeta `src/application/use-cases/`. Aquí se usan las entidades, value objects y repositorios definidos en el dominio para resolver necesidades del negocio.
+- **Repositorios (Puertos):** Las interfaces que definen cómo acceder a los datos se ubican en `src/Domain/repositories/`. Estas interfaces no dependen de ninguna tecnología concreta y actúan como contratos que deben ser implementados por la infraestructura.
 
-- **Adaptadores e Infraestructura:** Las implementaciones concretas de los repositorios y la integración con servicios externos (bases de datos, APIs, etc.) deben estar en `src/infrastructure/`. Aquí se conectan los puertos definidos en el dominio con la tecnología real.
+- **Servicios de Dominio:** Lógica de negocio que no pertenece a una entidad específica se implementa en `src/Domain/services/`.
 
-- **Presentación:** La capa de presentación (React, hooks, componentes, etc.) debe estar en `src/presentation/` y nunca contener lógica de dominio, solo interactuar con los casos de uso y mostrar datos.
+#### **Casos de Uso - Solo en Backend (`src/Backend/application/use-cases/`)**
+- La orquestación de la lógica de negocio se implementa **únicamente en el backend**, en `src/Backend/application/use-cases/`
+- Los casos de uso utilizan las entidades, value objects y repositorios definidos en el dominio compartido
+- **El frontend NO tiene casos de uso propios**, toda la lógica de aplicación pasa por el BFF
 
-> **Importante:** No implementes lógica de negocio en la infraestructura ni en la presentación. Mantén el dominio limpio y expresivo. Si tienes dudas sobre dónde debe ir una lógica, prioriza siempre la cohesión y la claridad del modelo de dominio.
+#### **Backend (BFF - Backend for Frontend)**
+- **Aplicación (`src/Backend/application/`):** Contiene todos los casos de uso, DTOs y puertos de entrada/salida
+- **Infraestructura (`src/Backend/infrastructure/`):** 
+  - `repositories/`: Implementaciones concretas de las interfaces del dominio
+  - `persistence/`: Configuración y cliente de Supabase/Firebase
+  - `external/`: Integración con servicios externos
+- **Presentación (`src/Backend/presentation/`):** Controllers, routes y APIs REST/GraphQL
 
+#### **Frontend**
+- **Presentación (`src/FrontEnd/presentation/`):** Componentes React, páginas, hooks y view models
+- **Infraestructura (`src/FrontEnd/infrastructure/`):** Cliente HTTP para comunicarse con el BFF
+- **Importación del Dominio:** El frontend **SÍ puede importar directamente del dominio compartido** cuando necesite:
+  - Crear instancias de entidades o value objects
+  - Validar datos antes de enviarlos al backend
+  - Utilizar tipos y excepciones del dominio
 
-Además, **todo el dominio debe estar cubierto por tests unitarios**. Cada entidad, value object y servicio de dominio debe tener sus pruebas en la carpeta correspondiente (por ejemplo, `src/domain/entities/__tests__/`). Esto garantiza que la lógica de negocio sea robusta, mantenible y evolucione de forma segura.
+#### **Flujo de Comunicación**
+```
+Frontend Presentation → HTTP Client → BFF API → Use Cases → Domain ← Supabase Repositories
+     ↑                                                        ↓
+     └──────────── Puede importar Domain directamente ────────┘
+```
 
-Cuando se implementen los distintos elementos de DDD, sigue esta estructura y asegúrate de que cada capa tiene una única responsabilidad y depende solo de las capas internas, nunca de las externas.
+#### **Reglas Importantes**
+1. **Dominio Limpio:** No implementes lógica de negocio en infraestructura ni presentación
+2. **Casos de Uso Centralizados:** Solo en el backend, el frontend consume APIs
+3. **Dominio Accesible:** El frontend puede importar del dominio para operaciones locales
+4. **BFF como Orquestador:** Toda la lógica de aplicación compleja pasa por el BFF
+5. **Supabase Oculto:** Solo el backend conoce Supabase, el frontend solo conoce el BFF
+
+#### **Testing**
+**Todo el dominio debe estar cubierto por tests unitarios**. Cada entidad, value object y servicio de dominio debe tener sus pruebas en `src/Domain/[carpeta]/__tests__/`. Esto garantiza que la lógica de negocio sea robusta, mantenible y evolucione de forma segura independientemente de frontend y backend.
 
 ---
 
