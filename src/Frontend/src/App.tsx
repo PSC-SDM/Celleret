@@ -1,0 +1,10 @@
+/**
+ * Componente principal de la aplicación
+ */
+import { HomePage } from './presentation/pages/HomePage';
+
+function App() {
+  return <HomePage />;
+}
+
+export default App;
