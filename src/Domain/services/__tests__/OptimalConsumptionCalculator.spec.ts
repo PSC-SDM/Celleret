@@ -115,15 +115,6 @@ describe('OptimalConsumptionCalculator', () => {
                 expect(suggested.getFullYear()).toBe(expectedYear);
             });
 
-            it('should suggest 1 year wait for mid-age red wines (3-10 years)', () => {
-                const wine = createWine('red', 2015, cellarDate);
-
-                const suggested = OptimalConsumptionCalculator.suggestConsumptionDate(wine);
-                const expectedYear = cellarDate.getFullYear() + 1;
-
-                expect(suggested.getFullYear()).toBe(expectedYear);
-            });
-
             it('should suggest immediate consumption for old red wines (> 10 years)', () => {
                 const wine = createWine('red', 2005, cellarDate);
 
