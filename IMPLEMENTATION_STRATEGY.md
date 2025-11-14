@@ -82,16 +82,13 @@
 #### **0.3 Setup Backend (BFF)** ✅
 *Prompt sugerido: "Configura el Backend for Frontend con Express y TypeScript"*
 - [ ] Configuración de CORS
+- [ ] Setup de Axios para HTTP client
 - [ ] Conectar el frontend con el backend con una llamada 'health'
 
-#### **0.4 Setup Frontend**
+#### **0.4 Setup Frontend** ✅
 *Prompt sugerido: "Configura el proyecto React con Vite y TailwindCSS"*
-- [ ] Inicialización React + Vite
-- [ ] Configuración de TailwindCSS
 - [ ] Instalación de shadcn/ui
-- [ ] Setup de React Router
-- [ ] Configuración de Zustand
-- [ ] Setup de Axios para HTTP client
+- [ ] Añadir componente card de shadcn/ui
 
 ### **FASE 1: Autenticación (Backend-First)** (Semana 3)
 
@@ -122,6 +119,7 @@
 
 #### **1.3 Frontend - Integración de Autenticación**
 *Prompt sugerido: "Crea los componentes y hooks de autenticación en React"*
+- [ ] Configuración de Zustand
 - [ ] **Hooks:**
   - [ ] `useAuth` (consume el BFF)
   - [ ] `useAuthGuard`

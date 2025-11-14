@@ -1,3 +1,4 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { useHealthCheck } from '../hooks/useHealthCheck';
 
 /**
@@ -24,46 +25,61 @@ export const HomePage = () => {
           Tu bodega personal digital
         </p>
         
-        <div className="bg-white rounded-lg shadow-lg p-8 space-y-4">
-          <h2 className="text-2xl font-semibold text-wine-800">
-            ¡Bienvenido a Celleret!
-          </h2>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl text-wine-800">
+              ¡Bienvenido a Celleret!
+            </CardTitle>
+            <CardDescription className="text-gray-600">
+              Gestiona tu colección de vinos de forma profesional y elegante.
+            </CardDescription>
+          </CardHeader>
           
-          <p className="text-gray-600">
-            Gestiona tu colección de vinos de forma profesional y elegante.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="p-4 bg-wine-50 rounded-lg">
-              <div className="text-3xl mb-2">📋</div>
-              <h3 className="font-semibold text-wine-900 mb-2">Organiza</h3>
-              <p className="text-sm text-gray-600">
-                Mantén un registro detallado de todos tus vinos
-              </p>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="bg-wine-50 border-wine-200">
+                <CardHeader className="pb-3">
+                  <div className="text-3xl mb-2">📋</div>
+                  <CardTitle className="text-wine-900">Organiza</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-600">
+                    Mantén un registro detallado de todos tus vinos
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-wine-50 border-wine-200">
+                <CardHeader className="pb-3">
+                  <div className="text-3xl mb-2">⏰</div>
+                  <CardTitle className="text-wine-900">Planifica</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-600">
+                    Conoce el momento óptimo de consumo
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-wine-50 border-wine-200">
+                <CardHeader className="pb-3">
+                  <div className="text-3xl mb-2">📊</div>
+                  <CardTitle className="text-wine-900">Analiza</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-600">
+                    Estadísticas de tu colección
+                  </CardDescription>
+                </CardContent>
+              </Card>
             </div>
             
-            <div className="p-4 bg-wine-50 rounded-lg">
-              <div className="text-3xl mb-2">⏰</div>
-              <h3 className="font-semibold text-wine-900 mb-2">Planifica</h3>
-              <p className="text-sm text-gray-600">
-                Conoce el momento óptimo de consumo
-              </p>
+            <div className="mt-8 text-sm text-gray-500">
+              <p>Versión 0.1.0 - MVP en desarrollo</p>
+              {renderBackendStatus()}
             </div>
-            
-            <div className="p-4 bg-wine-50 rounded-lg">
-              <div className="text-3xl mb-2">📊</div>
-              <h3 className="font-semibold text-wine-900 mb-2">Analiza</h3>
-              <p className="text-sm text-gray-600">
-                Estadísticas de tu colección
-              </p>
-            </div>
-          </div>
-          
-          <div className="mt-8 text-sm text-gray-500">
-            <p>Versión 0.1.0 - MVP en desarrollo</p>
-            {renderBackendStatus()}
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
