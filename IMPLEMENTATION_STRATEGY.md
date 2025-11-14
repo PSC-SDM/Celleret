@@ -53,7 +53,7 @@
 
 ### **FASE 0: Arquitectura Base** (Semanas 1-2)
 
-#### **0.1 Setup del Workspace** 
+#### **0.1 Setup del Workspace** ✅
 *Prompt sugerido: "Crea la estructura de carpetas completa según las Development Guidelines"*
 - [ ] Configuración del repositorio monorepo
 - [ ] Estructura de carpetas: `src/Domain/`, `src/Frontend/`, `src/Backend/`
@@ -61,7 +61,7 @@
 - [ ] Setup de ESLint + Prettier compartido
 - [ ] Configuración de path mapping (`@domain`, `@frontend`, `@backend`)
 
-#### **0.2 Dominio Core (Domain Layer)**
+#### **0.2 Dominio Core (Domain Layer)** ✅
 *Prompt sugerido: "Implementa las entidades básicas del dominio de vinos siguiendo DDD"*
 - [ ] **Entidades principales:**
   - [ ] `Wine` (entidad raíz del agregado)
@@ -79,14 +79,10 @@
 - [ ] **Servicios de dominio:**
   - [ ] `OptimalConsumptionCalculator`
 
-#### **0.3 Setup Backend (BFF)**
+#### **0.3 Setup Backend (BFF)** ✅
 *Prompt sugerido: "Configura el Backend for Frontend con Express y TypeScript"*
-- [ ] Inicialización del proyecto Node.js + Express
-- [ ] Configuración de TypeScript
-- [ ] Setup de middleware básico
 - [ ] Configuración de CORS
-- [ ] Setup de variables de entorno
-- [ ] Configuración de Supabase client
+- [ ] Conectar el frontend con el backend con una llamada 'health'
 
 #### **0.4 Setup Frontend**
 *Prompt sugerido: "Configura el proyecto React con Vite y TailwindCSS"*
@@ -101,6 +97,7 @@
 
 #### **1.1 Backend - Casos de Uso de Autenticación**
 *Prompt sugerido: "Implementa los casos de uso de autenticación en el BFF"*
+- [ ] Configuración de Supabase client
 - [ ] **Use Cases:**
   - [ ] `RegisterUserUseCase`
   - [ ] `LoginUserUseCase`

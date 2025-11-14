@@ -1,7 +1,18 @@
+import { useHealthCheck } from '../hooks/useHealthCheck';
+
 /**
  * Página principal de bienvenida
  */
 export const HomePage = () => {
+  const { isHealthy, isLoading } = useHealthCheck();
+
+  const renderBackendStatus = () => {
+    if (isLoading) return <p className="mt-2">🔄 Verificando backend...</p>;
+    return isHealthy 
+      ? <p className="mt-2 text-green-600">✅ Backend conectado</p>
+      : <p className="mt-2 text-red-600">❌ Backend desconectado</p>;
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-wine-100 to-white p-4">
       <div className="max-w-2xl mx-auto text-center space-y-6">
@@ -50,7 +61,7 @@ export const HomePage = () => {
           
           <div className="mt-8 text-sm text-gray-500">
             <p>Versión 0.1.0 - MVP en desarrollo</p>
-            <p className="mt-2">Backend conectado ✅</p>
+            {renderBackendStatus()}
           </div>
         </div>
       </div>
