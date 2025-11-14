@@ -6,8 +6,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { corsOptions } from './infrastructure/config/cors.config';
-import { errorHandler, notFoundHandler } from './presentation/middleware/error.middleware';
-import healthRoutes from './presentation/routes/health.routes';
+import { errorHandler, notFoundHandler } from './application/middleware/error.middleware';
+import healthRoutes from './application/routes/health.routes';
 
 export const createApp = (): Application => {
   const app = express();
