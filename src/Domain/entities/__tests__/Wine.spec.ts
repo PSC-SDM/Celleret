@@ -73,7 +73,6 @@ describe('Wine Entity', () => {
     describe('updateQuantity', () => {
         it('should update the quantity', () => {
             const wine = Wine.create(mockWineProps);
-            const beforeUpdate = wine.getUpdatedAt();
 
             // Small delay to ensure timestamp changes
             setTimeout(() => {
