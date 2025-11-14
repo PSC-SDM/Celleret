@@ -38,6 +38,7 @@ cd "$PROJECT_ROOT/src/Frontend" && npm install
 # Compilar Domain para que esté disponible para otras capas
 echo "🔨 Compilando Domain..."
 cd "$PROJECT_ROOT/src/Domain" && npm run build
+echo "✅ Domain compilado"
 
 # Crear archivo .env si no existe
 cd "$PROJECT_ROOT"
