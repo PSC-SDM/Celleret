@@ -90,6 +90,12 @@
 - [ ] Instalación de shadcn/ui
 - [ ] Añadir componente card de shadcn/ui
 
+#### **0.4 Setup Infraestructure**
+*Prompt sugerido: "Dockeriza la aplicacion y añade yarn workspaces"*
+- [ ] Dockeriza la aplicacion
+- [ ] Dockeriza el backend
+- [ ] Unifica los paquetes y usa yarn worksapces para mejorar las librerias
+
 ### **FASE 1: Autenticación (Backend-First)** (Semana 3)
 
 #### **1.1 Backend - Casos de Uso de Autenticación**
