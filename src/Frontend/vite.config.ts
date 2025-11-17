@@ -20,10 +20,12 @@ export default defineConfig({
     },
     server: {
         port: 3000,
-        host: true
+        host: true,
+        allowedHosts: [".joanmarc.dev"]
     },
     preview: {
         port: 3000,
-        host: true
+        host: true,
+        allowedHosts: [".joanmarc.dev"]
     }
 })
