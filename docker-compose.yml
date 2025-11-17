@@ -1,0 +1,48 @@
+services:
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    container_name: frontend
+    volumes:
+      - ./src/Frontend/:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - backend
+    restart: always
+  # redis:
+  #   container_name: redis
+  #   image: redis:7
+  #   ports:
+  #     - "6379:6379"
+  #   restart: always
+
+  # db:
+  #   image: postgres:15
+  #   container_name: db
+  #   environment:
+  #     POSTGRES_USER: rick
+  #     POSTGRES_PASSWORD: morty
+  #     POSTGRES_DB: rickandmorty
+  #   ports:
+  #     - "5432:5432"
+  #   restart: always
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #     - ./api/init.sql:/docker-entrypoint-initdb.d/init.sql
+  backend:
+    image: node:22-alpine
+    working_dir: /app
+    container_name: backend
+    volumes:
+      - ./src/Backend:/app/
+    ports:
+      - "3001:3001"
+    command: sh -c "npm install && npm run dev"
+    restart: always
