@@ -125,7 +125,7 @@ El dominio es **único y compartido** entre todas las capas de la aplicación, u
 - **Aplicación (`src/Backend/application/`):** Contiene todos los casos de uso, DTOs y puertos de entrada/salida
 - **Infraestructura (`src/Backend/infrastructure/`):** 
   - `repositories/`: Implementaciones concretas de las interfaces del dominio
-  - `persistence/`: Configuración y cliente de Supabase/Firebase
+  - `persistence/`: Configuración y cliente de MongoDB con Mongoose
   - `external/`: Integración con servicios externos
 - **Presentación (`src/Backend/presentation/`):** Controllers, routes y APIs REST/GraphQL
 
@@ -139,9 +139,9 @@ El dominio es **único y compartido** entre todas las capas de la aplicación, u
 
 #### **Flujo de Comunicación**
 ```
-Frontend Presentation → HTTP Client → BFF API → Use Cases → Domain ← Supabase Repositories
+Frontend Presentation → HTTP Client → BFF API → Use Cases → Domain ← MongoDB Repositories
      ↑                                                        ↓
-     └──────────── Puede importar Domain directamente ────────┘
+     └────────── Puede importar Domain directamente ────────┐
 ```
 
 #### **Reglas Importantes**
@@ -149,7 +149,7 @@ Frontend Presentation → HTTP Client → BFF API → Use Cases → Domain ← S
 2. **Casos de Uso Centralizados:** Solo en el backend, el frontend consume APIs
 3. **Dominio Accesible:** El frontend puede importar del dominio para operaciones locales
 4. **BFF como Orquestador:** Toda la lógica de aplicación compleja pasa por el BFF
-5. **Supabase Oculto:** Solo el backend conoce Supabase, el frontend solo conoce el BFF
+5. **MongoDB Oculto:** Solo el backend conoce MongoDB, el frontend solo conoce el BFF
 
 #### **Testing**
 **Todo el dominio debe estar cubierto por tests unitarios**. Cada entidad, value object y servicio de dominio debe tener sus pruebas en `src/Domain/[carpeta]/__tests__/`. Esto garantiza que la lógica de negocio sea robusta, mantenible y evolucione de forma segura independientemente de frontend y backend.

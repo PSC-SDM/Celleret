@@ -35,16 +35,16 @@
 - 🌐 **Axios** (cliente HTTP hacia BFF)
 
 **Backend (BFF - Node.js/Express):**
-- � **Node.js** + **Express** + **TypeScript**
+- 🚀 **Node.js** + **Express** + **TypeScript**
 - 🛡️ **JWT** + **bcrypt** (autenticación)
 - ✅ **Zod** (validación de schemas)
-- 🔌 **Supabase Client** (acceso a datos)
+- 📦 **MongoDB Driver** (acceso directo a datos, sin ORM)
 - 📊 **Winston** (logging)
 
 **Infraestructura:**
-- 🚀 **Vercel** (Frontend)
-- 🌊 **Railway/Render** (BFF Backend)
-- ☁️ **Supabase Cloud** (Database + Storage)
+- 🖥️ **VPS** (Frontend + Backend + MongoDB)
+- 🐳 **Docker** + **Docker Compose** (orquestación)
+- 🗄️ **MongoDB** (database local en VPS)
 - 🖼️ **Cloudinary** (imágenes - fase futura)
 
 ---
@@ -81,26 +81,25 @@
 
 #### **0.3 Setup Backend (BFF)** ✅
 *Prompt sugerido: "Configura el Backend for Frontend con Express y TypeScript"*
-- [ ] Configuración de CORS
-- [ ] Setup de Axios para HTTP client
-- [ ] Conectar el frontend con el backend con una llamada 'health'
+- [ ✅] Configuración de CORS
+- [ ✅ ] Setup de Axios para HTTP client
+- [ ✅] Conectar el frontend con el backend con una llamada 'health'
 
 #### **0.4 Setup Frontend** ✅
 *Prompt sugerido: "Configura el proyecto React con Vite y TailwindCSS"*
-- [ ] Instalación de shadcn/ui
-- [ ] Añadir componente card de shadcn/ui
+- [✅] Instalación de shadcn/ui
+- [✅] Añadir componente card de shadcn/ui
 
 #### **0.4 Setup Infraestructure**
 *Prompt sugerido: "Dockeriza la aplicacion y añade yarn workspaces"*
-- [ ] Dockeriza la aplicacion
-- [ ] Dockeriza el backend
+- [✅] Dockeriza la aplicacion
+- [✅] Dockeriza el backend
 - [ ] Unifica los paquetes y usa yarn worksapces para mejorar las librerias
 
 ### **FASE 1: Autenticación (Backend-First)** (Semana 3)
 
 #### **1.1 Backend - Casos de Uso de Autenticación**
 *Prompt sugerido: "Implementa los casos de uso de autenticación en el BFF"*
-- [ ] Configuración de Supabase client
 - [ ] **Use Cases:**
   - [ ] `RegisterUserUseCase`
   - [ ] `LoginUserUseCase`
@@ -116,10 +115,11 @@
   - [ ] Error handling middleware
 
 #### **1.2 Backend - Infraestructura de Auth**
-*Prompt sugerido: "Implementa los adaptadores de autenticación con Supabase"*
-- [ ] `SupabaseUserRepository` implementando `UserRepository`
-- [ ] Configuración de Supabase Auth
-- [ ] Manejo de tokens JWT
+*Prompt sugerido: "Implementa los adaptadores de autenticación con MongoDB driver"*
+- [ ] `MongoUserRepository` implementando `UserRepository`
+- [ ] Configuración de MongoDB driver (cliente nativo)
+- [ ] Adapters para mapear documentos ↔ Entidades de dominio
+- [ ] Manejo de tokens JWT con bcrypt para hashing
 - [ ] Validación con Zod schemas
 - [ ] Testing de endpoints de auth
 
@@ -168,12 +168,12 @@
   - [ ] `WineController` con endpoints completos
 
 #### **2.3 Backend - Infraestructura de Vinos**
-*Prompt sugerido: "Implementa el repositorio Supabase para vinos con todas las consultas"*
-- [ ] `SupabaseWineRepository`
-- [ ] Esquema de base de datos optimizado
-- [ ] Políticas RLS (Row Level Security)
-- [ ] Índices para performance
-- [ ] Mappers: Supabase ↔ Domain
+*Prompt sugerido: "Implementa el repositorio MongoDB driver para vinos con todas las consultas"*
+- [ ] `MongoWineRepository`
+- [ ] Adapters para mapear documentos ↔ Entidades Wine
+- [ ] Índices de MongoDB para performance (creados en setup)
+- [ ] Middleware de autenticación para proteger rutas
+- [ ] Mappers: Documento MongoDB ↔ Domain Entity
 
 #### **2.4 Frontend - Gestión Completa de Vinos**
 *Prompt sugerido: "Crea toda la UI para gestión de vinos con formularios y listados"*
@@ -291,16 +291,22 @@
 
 ### **FASE 6: Deploy y Documentación** (Semanas 10-11)
 
-#### **6.1 Configuración de Deploy**
-*Prompt sugerido: "Configura el despliegue completo con CI/CD para frontend y backend"*
-- [ ] **Deploy del Frontend:**
-  - [ ] Configuración en Vercel
-  - [ ] Variables de entorno
-  - [ ] Domain y SSL
-- [ ] **Deploy del Backend:**
-  - [ ] Configuración en Railway/Render
-  - [ ] Variables de entorno de producción
-  - [ ] Health checks
+#### **6.1 Configuración de Deploy en VPS**
+*Prompt sugerido: "Configura el despliegue completo en VPS con Docker Compose"*
+- [ ] **Configuración de VPS:**
+  - [ ] Setup de Docker y Docker Compose
+  - [ ] Configuración de Nginx como reverse proxy
+  - [ ] Certificados SSL con Let's Encrypt
+- [ ] **Deploy con Docker Compose:**
+  - [ ] Dockerfile para Frontend (build estático + nginx)
+  - [ ] Dockerfile para Backend (Node.js)
+  - [ ] Docker Compose orchestration (Frontend + Backend + MongoDB)
+  - [ ] Volúmenes persistentes para MongoDB
+  - [ ] Variables de entorno seguras
+  - [ ] Health checks y restart policies
+- [ ] **CI/CD:**
+  - [ ] GitHub Actions para build y deploy automático
+  - [ ] Scripts de backup de MongoDB
 
 #### **6.2 Documentación Final**
 *Prompt sugerido: "Crea la documentación completa del proyecto"*
@@ -385,11 +391,14 @@ celleret/
 │   │   │       └── WineMapper.ts
 │   │   ├── infrastructure/          # Capa de Infraestructura
 │   │   │   ├── repositories/
-│   │   │   │   ├── SupabaseUserRepository.ts
-│   │   │   │   └── SupabaseWineRepository.ts
+│   │   │   │   ├── MongoUserRepository.ts
+│   │   │   │   └── MongoWineRepository.ts
 │   │   │   ├── persistence/
-│   │   │   │   ├── supabase.client.ts
-│   │   │   │   └── database.config.ts
+│   │   │   │   ├── mongo.client.ts
+│   │   │   │   ├── database.config.ts
+│   │   │   │   └── adapters/
+│   │   │   │       ├── UserDocumentAdapter.ts
+│   │   │   │       └── WineDocumentAdapter.ts
 │   │   │   ├── external/
 │   │   │   │   └── email.service.ts
 │   │   │   └── config/
@@ -567,6 +576,7 @@ Contexto:
 - Arquitectura: Clean Architecture + Hexagonal
 - Capa: Backend/application/use-cases/
 - Importa del dominio compartido (src/Domain/)
+- Persistencia: MongoDB + Mongoose
 
 Requisitos:
 - Input: [DTO específico]
@@ -615,10 +625,11 @@ Incluye:
 
 #### **Sprint 2: Backend Core**
 6. "Configura Express + TypeScript con middleware básico"
-7. "Implementa CreateWineUseCase con validaciones"
-8. "Crea AuthController con endpoints JWT"
-9. "Implementa SupabaseWineRepository"
-10. "Añade tests de integración para endpoints"
+7. "Configura MongoDB con Mongoose y define modelos"
+8. "Implementa CreateWineUseCase con validaciones"
+9. "Crea AuthController con endpoints JWT y bcrypt"
+10. "Implementa MongoWineRepository y MongoUserRepository"
+11. "Añade tests de integración para endpoints"
 
 #### **Sprint 3: Frontend Core**
 11. "Configura React + Vite con TailwindCSS"
@@ -639,67 +650,74 @@ Antes de enviar cada prompt, verificar:
 
 ---
 
-## 🗄️ Esquema de Base de Datos
+## 🗄️ Esquema de Base de Datos (MongoDB + Driver Nativo)
 
-### Tabla: `users` (gestionada por Supabase Auth)
-```sql
--- Extendida con perfil personalizado si es necesario
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users PRIMARY KEY,
-  email TEXT,
-  full_name TEXT,
-  avatar_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+### Colección: `users`
+```typescript
+// Tipos TypeScript para el documento (sin ORM)
+export type UserDocument = {
+  _id: ObjectId;
+  email: string; // unique
+  password: string; // bcrypt hash
+  fullName?: string;
+  avatarUrl?: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// Índices necesarios en MongoDB
+db.users.createIndex({ email: 1 }, { unique: true });
 ```
 
-### Tabla: `wines`
-```sql
-CREATE TABLE wines (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES auth.users NOT NULL,
-  name TEXT NOT NULL,
-  quantity INTEGER DEFAULT 1,
-  winery TEXT,
-  denomination TEXT,
-  type TEXT NOT NULL, -- 'tinto', 'blanco', 'rosado', 'espumoso', 'generoso'
-  vintage INTEGER,
-  purchase_date DATE,
-  optimal_start_date DATE,
-  optimal_end_date DATE,
-  notes TEXT,
-  image_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+### Colección: `wines`
+```typescript
+// Tipos TypeScript para el documento (sin ORM)
+export type WineDocument = {
+  _id: ObjectId;
+  userId: ObjectId; // Reference a users
+  name: string;
+  quantity: number;
+  winery?: string;
+  denomination?: string;
+  type: 'tinto' | 'blanco' | 'rosado' | 'espumoso' | 'generoso';
+  vintage?: number;
+  purchaseDate?: Date;
+  optimalStartDate?: Date;
+  optimalEndDate?: Date;
+  notes?: string;
+  imageUrl?: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
--- Índices para mejorar rendimiento
-CREATE INDEX wines_user_id_idx ON wines(user_id);
-CREATE INDEX wines_type_idx ON wines(type);
-CREATE INDEX wines_optimal_dates_idx ON wines(optimal_start_date, optimal_end_date);
+// Índices necesarios en MongoDB
+db.wines.createIndex({ userId: 1 });
+db.wines.createIndex({ type: 1 });
+db.wines.createIndex({ optimalStartDate: 1, optimalEndDate: 1 });
 ```
 
-### Políticas RLS (Row Level Security)
-```sql
--- Los usuarios solo pueden ver sus propios vinos
-ALTER TABLE wines ENABLE ROW LEVEL SECURITY;
+### Seguridad a Nivel de Aplicación
+```typescript
+// Los usuarios solo pueden acceder a sus propios vinos
+// Esto se implementa en el middleware de autenticación y en los repositorios
 
-CREATE POLICY "Users can view own wines"
-  ON wines FOR SELECT
-  USING (auth.uid() = user_id);
+// Ejemplo en MongoWineRepository:
+async findByUserId(userId: UserId): Promise<Wine[]> {
+  const collection = this.db.collection('wines');
+  const documents = await collection
+    .find({ userId: new ObjectId(userId.value) })
+    .toArray();
+  
+  return documents.map(doc => this.toDomain(doc));
+}
 
-CREATE POLICY "Users can create own wines"
-  ON wines FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own wines"
-  ON wines FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete own wines"
-  ON wines FOR DELETE
-  USING (auth.uid() = user_id);
+// Adapter para mapear documento → entidad del dominio
+private toDomain(doc: WineDocument): Wine {
+  return new Wine(
+    { id: new WineId(doc._id.toString()), ... },
+    { version: 1 }
+  );
+}
 ```
 
 ---
@@ -821,8 +839,17 @@ npm run format
 
 ### Variables de Entorno (.env.example)
 ```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+# Backend
+MONGODB_URI=mongodb://localhost:27017/celleret
+JWT_SECRET=your_jwt_secret_key
+JWT_REFRESH_SECRET=your_jwt_refresh_secret
+JWT_EXPIRES_IN=1h
+JWT_REFRESH_EXPIRES_IN=7d
+PORT=3000
+NODE_ENV=development
+
+# Frontend
+VITE_API_URL=http://localhost:3000/api
 ```
 
 ---
